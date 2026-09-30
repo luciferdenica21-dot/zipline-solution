@@ -27,26 +27,28 @@ export default function Hero() {
       className="relative min-h-[92vh] md:min-h-screen w-full flex items-center pt-28 pb-20"
     >
       {/* Clip wrapper to prevent video overflow */}
-      <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 0 }}>
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          style={{
-            position: 'absolute',
-            top: 0, left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: isMobile ? 'center 15%' : 'center center',
-            opacity: 0.85,
-          }}
-        >
-          <source src="/bg-video.mp4" type="video/mp4" />
-        </video>
-      </div>
+      {isMobile && (
+        <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 0 }}>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            style={{
+              position: 'absolute',
+              top: 0, left: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center 15%',
+              opacity: 0.85,
+            }}
+          >
+            <source src="/bg-video.mp4" type="video/mp4" />
+          </video>
+        </div>
+      )}
 
       <div className="absolute inset-0" style={{ zIndex: 1 }}>
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/60"></div>
