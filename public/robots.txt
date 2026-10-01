@@ -1,0 +1,27 @@
+# robots.txt for Zipline Solution
+# Allow all bots to crawl the site
+
+User-agent: *
+Allow: /
+
+# Disallow specific paths if needed
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+
+# Sitemap location
+Sitemap: https://zipline-solution.com/sitemap.xml
+
+# Crawl-delay (optional, adjust based on server capacity)
+Crawl-delay: 1
+
+# Allow specific bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Disallow image indexing from specific folders if needed
+User-agent: Googlebot-Image
+Disallow: /private/

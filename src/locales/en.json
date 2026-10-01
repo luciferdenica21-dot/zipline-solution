@@ -1,0 +1,123 @@
+{
+  "header": {
+    "about": "ABOUT",
+    "products": "EQUIPMENT",
+    "contacts": "CONTACTS",
+    "contactMe": "Contact Me",
+    "menu": "Menu",
+    "productsMenuLabel": "Products"
+  },
+  "hero": {
+    "line1": "Engineering",
+    "line2": "Extreme Parks:",
+    "line3": "From concept to",
+    "line4": "custom equipment",
+    "description": "Designing high-altitude attractions, developing custom nodes and trolleys. Increasing zipline throughput and reducing operational costs."
+  },
+  "about": {
+    "name": "Vasyl Baranovsky",
+    "bio": "High-altitude attraction engineer and equipment designer. 10+ years designing, building, and optimizing facilities where errors are unacceptable. Developing custom nodes and trolleys that increase throughput and reduce equipment wear.",
+    "title": "ENGINEERING SOLUTIONS FOR REDUCING OWNERSHIP COSTS AND INCREASING THROUGHPUT",
+    "subtitle": "Design considering the full lifecycle of the attraction: from optimizing the start cycle to reducing component wear.",
+    "specs": {
+      "traffic": {
+        "title": "MAXIMIZING TRAFFIC",
+        "fact": "Reducing dispatch interval",
+        "desc": "Optimizing geometry of launch platforms and applying custom trolleys. Increasing throughput without compromising safety."
+      },
+      "opex": {
+        "title": "REDUCING OPERATIONAL COSTS",
+        "fact": "Minimizing maintenance costs",
+        "desc": "Precise calculation of cable sag and friction combined with wear-resistant nodes. Preventing downtime and equipment wear."
+      },
+      "safety": {
+        "title": "SAFETY AND BRAKING SYSTEMS",
+        "fact": "Eliminating human error",
+        "desc": "Calculating dynamic and peak loads. Direct integration of magnetic braking systems. Reducing legal and operational risks."
+      },
+      "rnd": {
+        "title": "CUSTOM NODE DEVELOPMENT",
+        "fact": "Design from scratch",
+        "desc": "Developing non-standard nodes and mechanisms when off-the-shelf equipment doesn't provide the required durability or speed."
+      }
+    }
+  },
+  "products": {
+    "title": "ENGINEERING SYSTEMS AND SPECIAL EQUIPMENT",
+    "eyebrow": "In-house engineering",
+    "subtitle": "Three production items from the catalog: from a chair system to an autonomous robot. Each is engineered around real commercial zipline challenges — throughput, safety, and cost of ownership.",
+    "chair": {
+      "title": "CHAIR SYSTEM FOR COMMERCIAL ZIPLINE",
+      "tag": "Passenger transport",
+      "menu": "Chair System",
+      "description": "A suspended delivery system for getting guests to the launch platform: expands the audience to children, seniors and people with disabilities, shortens the boarding cycle and reduces staff workload.",
+      "details": {
+        "purpose_label": "PURPOSE:",
+        "purpose": "Increasing throughput, expanding audience (children, elderly, people with disabilities).",
+        "seat_label": "SEAT:",
+        "seat": "Wear-resistant composite, cordura with UV and precipitation protection, water accumulation protection.",
+        "suspension_label": "SUSPENSION:",
+        "suspension": "Rigid/semi-rigid connection to trolley to minimize lateral sway.",
+        "loads_label": "LOADS:",
+        "loads": "Working load up to 135 kg, breaking load > 22 kN.",
+        "safety_label": "SAFETY:",
+        "safety": "4-point harnesses with self-opening protection, redundant backup line, built-in damping.",
+        "efficiency_label": "EFFICIENCY:",
+        "efficiency": "Saves 60-80% time at start, reduces staff workload."
+      }
+    },
+    "magnet": {
+      "title": "MAGNETIC ROLLER FOR HIGH-SPEED ZIPLINE (UP TO 80 KM/H)",
+      "tag": "Braking & speed",
+      "menu": "Magnetic Roller",
+      "description": "A trolley with contactless magnetic braking for high-speed lines. Braking force is individually calculated for the geometry of each track.",
+      "details": {
+        "speed_label": "SPEED:",
+        "speed": "Up to 80 km/h with optimal track geometry.",
+        "magnetic_label": "MAGNETIC SYSTEM:",
+        "magnetic": "Individual calculation of magnetic braking force for track geometry.",
+        "materials_label": "MATERIALS:",
+        "materials": "Aviation aluminum, hardened steel, reinforced sealed bearings.",
+        "durability_label": "DURABILITY:",
+        "durability": "Contactless magnetic elements minimize wear and maintenance.",
+        "usage_label": "USAGE:",
+        "usage": "Rigid connection with chair suspensions without play."
+      }
+    },
+    "shmel": {
+      "title": "SUSPENDED AUTONOMOUS TRANSPORT ROBOT \"SHMEL\"",
+      "tag": "Automation",
+      "menu": "Shmel Robot",
+      "description": "An autonomous suspended platform for cargo transport and cable inspection. Operates without an operator, radio-controlled, with a full safety circuit.",
+      "details": {
+        "mechanics_label": "MECHANICS:",
+        "mechanics": "Drive wheels 140 mm with polyurethane bandage, 2 servo motors 48V 600W each, speed up to 3.5 m/s.",
+        "control_label": "CONTROL:",
+        "control": "Radio system \"Pitch and Catch\" (2 operators), DCSC controller with S-curves.",
+        "autonomy_label": "AUTONOMY:",
+        "autonomy": "Autonomous movement along the cable, possibility of operation without operator.",
+        "safety_label": "SAFETY:",
+        "safety": "Mechanical limit switches, E-STOP system (<0.5s), battery discharge monitoring (<43V).",
+        "applications_label": "APPLICATIONS:",
+        "applications": "Cargo transportation, cable inspection, technical maintenance."
+      }
+    }
+  },
+  "contacts": {
+    "title": "Get in Touch",
+    "subtitle": "Ready to discuss your project. Write or call.",
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp",
+    "phone": "Phone",
+    "email": "Email",
+    "location": "Location",
+    "locationValue": "Tbilisi, 0144, Georgia",
+    "request": "REQUEST",
+    "formDescription": "Leave your details. We'll contact you.",
+    "emailLabel": "Email *",
+    "emailPlaceholder": "you@example.com",
+    "send": "Send",
+    "sent": "Sent ✓",
+    "privacy": "By submitting the form, you agree to data processing."
+  }
+}

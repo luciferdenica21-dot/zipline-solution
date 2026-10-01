@@ -1,16 +1,191 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logobrand.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zipline Solution — Приключения на высоте</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Anti-cache during development -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <!-- Primary SEO Meta Tags -->
+  <title>Zipline Solution — Проектирование и строительство зиплайнов в Грузии и Израиле | Консалтинг и оборудование
+  </title>
+  <meta name="description"
+    content="Профессиональное проектирование, строительство и консалтинг зиплайнов в Грузии и Израиле. Разработка кастомных узлов, тележек, безопасность, увеличение пропускной способности. Опыт работы с парками развлечений и коммерческими проектами." />
+  <meta name="keywords"
+    content="зиплайн, зиплайн Грузия, зиплайн Израиль, проектирование зиплайнов, строительство зиплайнов, тарзанка, парки развлечений, консалтинг зиплайнов, безопасность зиплайнов, custom nodes, zipline consulting, trolley development, Грузия, Израиль, Tbilisi, Tel Aviv" />
+  <meta name="author" content="Vasil Baranovsky" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <!-- Language and Regional SEO -->
+  <meta name="geo.region" content="GE" />
+  <meta name="geo.region" content="IL" />
+  <meta name="geo.placename" content="Georgia, Israel" />
+  <meta name="geo.position" content="41.7151;44.8271" />
+  <meta name="ICBM" content="41.7151, 44.8271" />
+
+  <!-- Hreflang tags for multilingual SEO -->
+  <link rel="alternate" hreflang="ru" href="https://zipline-solution.com/" />
+  <link rel="alternate" hreflang="en" href="https://zipline-solution.com/en" />
+  <link rel="alternate" hreflang="x-default" href="https://zipline-solution.com/" />
+
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://zipline-solution.com/" />
+  <meta property="og:title" content="Zipline Solution — Проектирование зиплайнов в Грузии и Израиле" />
+  <meta property="og:description"
+    content="Профессиональное проектирование, строительство и консалтинг зиплайнов. Кастомные узлы, тележки, безопасность. Работаем в Грузии и Израиле." />
+  <meta property="og:image" content="https://zipline-solution.com/og-image.jpg" />
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:site_name" content="Zipline Solution" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://zipline-solution.com/" />
+  <meta name="twitter:title" content="Zipline Solution — Зиплайны в Грузии и Израиле" />
+  <meta name="twitter:description"
+    content="Проектирование, строительство и консалтинг зиплайнов. Безопасность и инновации." />
+  <meta name="twitter:image" content="https://zipline-solution.com/og-image.jpg" />
+
+  <!-- Technical SEO -->
+  <link rel="canonical" href="https://zipline-solution.com/" />
+  <meta name="theme-color" content="#070707" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/favicon-180.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Structured Data (Schema.org) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Zipline Solution",
+      "description": "Проектирование, строительство и консалтинг зиплайнов в Грузии и Израиле",
+      "url": "https://zipline-solution.com",
+      "telephone": "+995-XXX-XXX-XXX",
+      "email": "contact@zipline-solution.com",
+      "address": [
+        {
+          "@type": "PostalAddress",
+          "addressLocality": "Tbilisi",
+          "addressRegion": "Georgia",
+          "addressCountry": "GE"
+        },
+        {
+          "@type": "PostalAddress", 
+          "addressLocality": "Tel Aviv",
+          "addressRegion": "Israel",
+          "addressCountry": "IL"
+        }
+      ],
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "41.7151",
+        "longitude": "44.8271"
+      },
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Georgia"
+        },
+        {
+          "@type": "Country", 
+          "name": "Israel"
+        }
+      ],
+      "priceRange": "$$$",
+      "openingHours": "Mo-Su 00:00-23:59",
+      "sameAs": [
+        "https://www.instagram.com/zipline-solution",
+        "https://www.linkedin.com/company/zipline-solution"
+      ]
+    }
+    </script>
+
+  <!-- Additional Schema for Service -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Zipline Design and Construction Services",
+      "description": "Professional zipline design, construction, and consulting services in Georgia and Israel",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Zipline Solution"
+      },
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Georgia"
+        },
+        {
+          "@type": "Country",
+          "name": "Israel" 
+        }
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Zipline Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Zipline Design",
+              "description": "Custom zipline route design and planning"
+            }
+          },
+          {
+            "@type": "Offer", 
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Zipline Construction",
+              "description": "Professional installation and construction"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service", 
+              "name": "Custom Node Development",
+              "description": "Custom-designed nodes and trolleys"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Safety Consulting", 
+              "description": "Safety systems and braking solutions"
+            }
+          }
+        ]
+      }
+    }
+    </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

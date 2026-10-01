@@ -1,0 +1,60 @@
+{
+  "name": "Zipline Solution — Зиплайны в Грузии и Израиле",
+  "short_name": "Zipline Solution",
+  "description": "Профессиональное проектирование, строительство и консалтинг зиплайнов в Грузии и Израиле",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070707",
+  "theme_color": "#070707",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "ru",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "business",
+    "engineering",
+    "entertainment",
+    "travel"
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Products",
+      "short_name": "Products",
+      "description": "Zipline equipment and services",
+      "url": "/#products",
+      "icons": [
+        {
+          "src": "/logobrand.svg",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Contacts",
+      "short_name": "Contacts",
+      "description": "Contact information",
+      "url": "/#contacts",
+      "icons": [
+        {
+          "src": "/logobrand.svg",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}

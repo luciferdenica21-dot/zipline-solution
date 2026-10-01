@@ -35,11 +35,11 @@ export default function Concept() {
         preload="metadata"
         poster="https://images.unsplash.com/photo-1519315901367-f34ff9154487?auto=format&fit=crop&w=2000&q=80"
         className="absolute left-1/2 top-0 -translate-x-1/2 w-full h-[130%] sm:h-[120%] min-h-full object-cover object-center-top z-0 scale-[1.02]"
-        style={{ objectPosition: 'center top' }}
+        style={{ objectPosition: 'center top', marginTop: '-200px' }}
       >
         <source src="/bg-video.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/15 to-black/80 z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/90 backdrop-blur-sm z-10"></div>
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 relative z-20">
         <div className="max-w-4xl">
           <div className="mb-6 sm:mb-8 inline-flex items-center gap-3 pl-1">

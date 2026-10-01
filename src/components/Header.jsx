@@ -1,18 +1,22 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import Logo from '../assets/logobrand.svg'
 
 const navItems = [
-  { id: 'about', label: 'ОБО МНЕ' },
-  { id: 'products', label: 'СНАРЯЖЕНИЯ' },
-  { id: 'contacts', label: 'КОНТАКТЫ' },
+  { id: 'products', labelKey: 'header.products' },
+  { id: 'contacts', labelKey: 'header.contacts' },
+  { id: 'about', labelKey: 'header.about' },
 ]
 
 const scrollTo = (id) => {
   const el = document.getElementById(id)
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  if (!el) return
+  const y = el.getBoundingClientRect().top + window.scrollY - 80
+  window.scrollTo({ top: y, behavior: 'smooth' })
 }
 
 export default function Header() {
+  const { t, i18n } = useTranslation()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -28,6 +32,9 @@ export default function Header() {
     setOpen(false)
     scrollTo(id)
   }
+
+  const isEn = i18n.language === 'en'
+  const navLinkCls = `group relative text-[12px] font-medium ${isEn ? 'nav-link-normal' : 'tracking-[0.12em]'} text-white/70 hover:text-white transition-colors`
 
   return (
     <header
@@ -62,38 +69,62 @@ export default function Header() {
                 key={item.id}
                 href={`#${item.id}`}
                 onClick={(e) => handleClick(e, item.id)}
-                className="group relative text-[12px] font-medium tracking-[0.12em] text-white/70 hover:text-white transition-colors"
+                className={navLinkCls}
               >
-                {item.label}
+                {t(item.labelKey)}
                 <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
               </a>
             ))}
             <button
               onClick={() => scrollTo('contacts')}
-              className="btn-glass-orange rounded-lg !px-3 !py-1.5 !text-[11px] !border-green-500/55 !text-green-400 !bg-green-500/10"
+              className={`${isEn ? 'btn-glass-orange-normal' : 'btn-glass-orange'} rounded-lg !px-3 !py-1.5 !text-[11px] !border-green-500/55 !text-green-400 !bg-green-500/10`}
             >
-              Связаться со мной
+              {t('header.contactMe')}
+            </button>
+            <button
+              onClick={() => i18n.changeLanguage(isEn ? 'ru' : 'en')}
+              className={`text-[12px] font-medium ${isEn ? 'nav-link-normal' : 'tracking-[0.12em]'} text-white/70 hover:text-white transition-colors ml-4`}
+            >
+              {isEn ? 'RU' : 'EN'}
             </button>
           </nav>
 
-          {/* Mobile burger */}
-          <button
-            className={`lg:hidden flex flex-col justify-center items-center w-10 h-10 ${open ? 'burger-open' : ''}`}
-            onClick={() => setOpen(!open)}
-            aria-label="Меню"
-            aria-expanded={open}
-          >
-            <span className="burger-line w-5 h-px bg-white mb-1.5"></span>
-            <span className="burger-line w-5 h-px bg-white mb-1.5"></span>
-            <span className="burger-line w-5 h-px bg-white"></span>
-          </button>
+          {/* Mobile: language switch + green phone (outside the burger) + burger */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <button
+              onClick={() => i18n.changeLanguage(isEn ? 'ru' : 'en')}
+              aria-label={isEn ? 'Switch to Russian' : 'Switch to English'}
+              className="h-10 min-w-[44px] px-2.5 rounded-full border border-white/25 text-white/85 text-[11px] font-semibold tracking-[0.08em] hover:border-white/50 hover:text-white transition-colors"
+            >
+              {isEn ? 'RU' : 'EN'}
+            </button>
+            <button
+              onClick={() => scrollTo('contacts')}
+              aria-label={t('header.contactMe')}
+              className="w-10 h-10 rounded-full bg-green-500/15 border border-green-500/50 text-green-400 flex items-center justify-center hover:bg-green-500/30 transition-colors"
+            >
+              <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <button
+              className={`flex flex-col justify-center items-center w-10 h-10 ${open ? 'burger-open' : ''}`}
+              onClick={() => setOpen(!open)}
+              aria-label={t('header.menu')}
+              aria-expanded={open}
+            >
+              <span className="burger-line w-5 h-px bg-white mb-1.5"></span>
+              <span className="burger-line w-5 h-px bg-white mb-1.5"></span>
+              <span className="burger-line w-5 h-px bg-white"></span>
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile menu */}
       <div
         className={`lg:hidden overflow-hidden transition-all duration-300 ${
-          open ? 'max-h-[520px] opacity-100' : 'max-h-0 opacity-0'
+          open ? 'max-h-[480px] opacity-100' : 'max-h-0 opacity-0'
         } bg-black/95 backdrop-blur-md`}
       >
         <nav className="flex flex-col px-4 py-3">
@@ -102,17 +133,11 @@ export default function Header() {
               key={item.id}
               href={`#${item.id}`}
               onClick={(e) => handleClick(e, item.id)}
-              className="px-4 py-3 text-[13px] tracking-[0.12em] font-medium text-white/80 hover:text-white transition-colors border-b border-white/[0.06]"
+              className={`px-4 py-3 text-[13px] ${isEn ? 'nav-link-normal' : 'tracking-[0.12em]'} font-medium text-white/80 hover:text-white transition-colors border-b border-white/[0.06]`}
             >
-              {item.label}
+              {t(item.labelKey)}
             </a>
           ))}
-          <button
-            onClick={() => scrollTo('contacts')}
-            className="btn-glass-orange mt-3 rounded-lg w-full justify-center !py-3 !border-green-500/55 !text-green-400 !bg-green-500/10"
-          >
-            Связаться со мной
-          </button>
         </nav>
       </div>
 

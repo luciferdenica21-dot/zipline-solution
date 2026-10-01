@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 const scrollTo = (id) => {
   const el = document.getElementById(id)
@@ -6,27 +7,22 @@ const scrollTo = (id) => {
 }
 
 export default function Hero() {
+  const { t } = useTranslation()
   const [offset, setOffset] = useState(0)
-  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const onScroll = () => setOffset(window.scrollY)
-    const onResize = () => setIsMobile(window.innerWidth < 768)
-    onResize()
+    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onResize)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onResize)
-    }
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
     <section
       id="hero"
-      className="relative min-h-[92vh] md:min-h-screen w-full flex items-center pt-28 pb-20"
+      className="relative h-screen w-full flex items-center overflow-hidden"
     >
-      {/* Clip wrapper to prevent video overflow */}
+      {/* Background video (all screens), slightly darkened */}
       <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 0 }}>
         <video
           autoPlay
@@ -34,22 +30,16 @@ export default function Hero() {
           muted
           playsInline
           preload="auto"
-          style={{
-            position: 'absolute',
-            top: 0, left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: isMobile ? 'center 15%' : 'center center',
-            opacity: 0.85,
-          }}
+          className="w-full h-full object-cover object-center"
+          style={{ opacity: 0.8 }}
         >
-          <source src="/bg-video.mp4" type="video/mp4" />
+          <source src="/intro_1.mp4" type="video/mp4" />
         </video>
+        <div className="absolute inset-0 bg-black/30"></div>
       </div>
 
       <div className="absolute inset-0" style={{ zIndex: 1 }}>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/60"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/80"></div>
         <div
           className="absolute inset-0 section-grid-bg mask-fade-v opacity-50"
           style={{ transform: `translateY(${offset * 0.06}px)` }}
@@ -70,27 +60,24 @@ export default function Hero() {
         ></div>
       </div>
 
-      <div className="relative z-10 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl">
-          {/* Eyebrow — cleaned: NO fluff (removed) */}
+      <div className="relative z-10 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
+        <div className="w-full">
+          <div className="max-w-4xl">
+            <h1 className="animate-fade-up font-display tracking-[-0.02em] leading-[1.15] text-[7.5vw] sm:text-[5.5vw] md:text-[3.2vw] lg:text-[38px] xl:text-[44px] mb-8 sm:mb-10">
+              <span className="block text-white">{t('hero.line1')}</span>
+              <span className="block text-white">{t('hero.line2')}</span>
+              <span className="block text-white">
+                {t('hero.line3')}
+              </span>
+              <span className="block bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">
+                {t('hero.line4')}
+              </span>
+            </h1>
 
-          {/* H1 — compact scaled */}
-          <h1 className="animate-fade-up font-display tracking-[-0.02em] leading-[1.15] text-[7.5vw] sm:text-[5.5vw] md:text-[4.5vw] lg:text-[52px] xl:text-[62px] mb-10 sm:mb-14">
-            <span className="block text-white">Инженерия</span>
-            <span className="block text-white">Экстремальных Парков:</span>
-            <span className="block text-white">
-              От концепта до
-            </span>
-            <span className="block bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">
-              собственного снаряжения
-            </span>
-          </h1>
-
-          <p className="animate-fade-up text-[15.5px] sm:text-[17px] md:text-[18px] leading-[1.75] text-white/70 max-w-2xl">
-            Проектирование высотных аттракционов, разработка кастомных узлов и
-            кареток. Повышение пропускной способности зиплайнов и снижение
-            операционных расходов.
-          </p>
+            <p className="animate-fade-up text-[15.5px] sm:text-[17px] md:text-[18px] leading-[1.75] text-white/70 max-w-2xl">
+              {t('hero.description')}
+            </p>
+          </div>
         </div>
       </div>
     </section>

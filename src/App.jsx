@@ -1,7 +1,7 @@
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
-import About from './components/About.jsx'
 import Products from './components/Products.jsx'
+import About from './components/About.jsx'
 import Contacts from './components/Contacts.jsx'
 
 export default function App() {
@@ -10,8 +10,8 @@ export default function App() {
       <Header />
       <main className="relative">
         <Hero />
-        <About />
         <Products />
+        <About />
         <Contacts />
       </main>
     </div>

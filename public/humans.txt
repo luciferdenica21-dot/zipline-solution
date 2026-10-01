@@ -1,0 +1,39 @@
+/* Zipline Solution - Zipline Design and Construction */
+/* TEAM */
+  Founder: Vasil Baranovsky
+  Contact: contact@zipline-solution.com
+  Location: Georgia, Israel
+
+/* SITE */
+  Last update: 2024/09/29
+  Language: Russian, English
+  Doctype: HTML5
+  Standards: HTML5, CSS3, JavaScript (React)
+  Components: Vite, React, Tailwind CSS
+  IDE: VS Code
+
+/* META */
+  Description: Professional zipline design, construction, and consulting in Georgia and Israel
+  Keywords: zipline, Georgia, Israel, zipline design, construction, consulting, safety, custom nodes
+  Author: Vasil Baranovsky
+
+/* TECHNOLOGIES */
+  Frontend: React 18, Vite 5, Tailwind CSS
+  i18n: react-i18next
+  Performance: Service Worker, PWA
+  SEO: Schema.org, Open Graph, structured data
+
+/* SERVICES */
+  - Zipline design and planning
+  - Custom node and trolley development
+  - Safety systems and braking
+  - Operational cost optimization
+  - Throughput maximization
+  - Consulting for Georgia and Israel markets
+
+/* THANKS */
+  Special thanks to all clients and partners in Georgia and Israel
+
+/* NETWORK */
+  Instagram: https://www.instagram.com/zipline-solution
+  LinkedIn: https://www.linkedin.com/company/zipline-solution

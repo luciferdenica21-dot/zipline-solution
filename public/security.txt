@@ -1,0 +1,14 @@
+# Security Policy for Zipline Solution
+# Last updated: 2024-09-29
+
+Contact: mailto:security@zipline-solution.com
+Expires: 2025-09-29T00:00:00.000Z
+Encryption: https://zipline-solution.com/pgp-key.txt
+Acknowledgments: https://zipline-solution.com/security-acknowledgments
+Preferred-Languages: ru, en
+Canonical: https://zipline-solution.com/.well-known/security.txt
+Policy: https://zipline-solution.com/security-policy
+
+# Security researchers can report vulnerabilities through:
+# - Email: security@zipline-solution.com
+# - Expected response time: 48 hours
