@@ -3,16 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Bebas Neue';
-  src: url('/fonts/BebasNeue-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'TT Hoves Pro Bold';
-  src: url('/fonts/TT%20Hoves%20Pro%20Trial%20Bold.ttf') format('truetype');
+  src: url('/fonts/TT-Hoves-Pro-Trial-Bold.woff') format('woff');
   font-weight: 400 700;
   font-style: normal;
   font-display: swap;
@@ -20,7 +12,7 @@
 
 @font-face {
   font-family: 'TT Hoves Pro Light';
-  src: url('/fonts/TT%20Hoves%20Pro%20Trial%20Light.ttf') format('truetype');
+  src: url('/fonts/TT-Hoves-Pro-Trial-Light.woff') format('woff');
   font-weight: 100 400;
   font-style: normal;
   font-display: swap;
@@ -28,7 +20,7 @@
 
 @font-face {
   font-family: 'TT Hoves Pro Expanded';
-  src: url('/fonts/TT%20Hoves%20Pro%20Trial%20Expanded%20Black.ttf') format('truetype');
+  src: url('/fonts/TT-Hoves-Pro-Trial-Expanded-Black.woff') format('woff');
   font-weight: 400 900;
   font-style: normal;
   font-display: swap;

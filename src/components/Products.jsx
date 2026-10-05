@@ -162,6 +162,8 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
                 alt={i === pos ? alt : ''}
                 draggable="false"
                 loading={i === 1 ? 'eager' : 'lazy'}
+                width={500}
+                height={500}
                 className="max-w-full max-h-full w-auto h-auto object-contain pointer-events-none"
                 style={{ borderRadius: '10%', ...(imgTransform ? { transform: imgTransform } : {}) }}
                 onError={(e) => {
@@ -217,6 +219,8 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
               src={images[zoomIdx]}
               alt={`${alt} ${zoomIdx + 1}`}
               draggable="false"
+              width={500}
+              height={500}
               className="max-w-[94vw] max-h-[88vh] object-contain select-none shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             />
@@ -356,7 +360,7 @@ export default function Products() {
   const products = [
     {
       id: 'chair',
-      images: ['/k1.png', '/k2.png', '/k3.png', '/k4.png', '/k5.png'],
+      images: ['/k1.webp', '/k2.webp', '/k3.webp', '/k4.webp', '/k5.webp'],
       // Soft accent wash: green for the chair, flowing into grey on the magnet and orange on the shmel
       gradient: 'linear-gradient(150deg, rgba(158,230,25,0.26) 0%, rgba(158,230,25,0.10) 42%, rgba(158,230,25,0) 80%)',
       title: t('products.chair.title'),
@@ -373,7 +377,7 @@ export default function Products() {
     },
     {
       id: 'magnet',
-      images: ['/m1.png', '/m2.png', '/m3.png', '/m4.png', '/m5.png'],
+      images: ['/m1.webp', '/m2.webp', '/m3.webp', '/m4.webp', '/m5.webp'],
       gradient: 'linear-gradient(150deg, rgba(178,184,194,0.26) 0%, rgba(146,152,162,0.20) 45%, rgba(104,110,120,0.08) 78%, rgba(104,110,120,0) 100%)',
       title: t('products.magnet.title'),
       tag: t('products.magnet.tag'),
@@ -388,7 +392,7 @@ export default function Products() {
     },
     {
       id: 'shmel',
-      images: ['/s1.png', '/s2.png', '/s3.png', '/s4.png', '/s5.png'],
+      images: ['/s1.webp', '/s2.webp', '/s3.webp', '/s4.webp', '/s5.webp'],
       dark: true,
       gradient: 'linear-gradient(150deg, rgba(146,152,162,0.10) 0%, rgba(255,122,26,0.24) 45%, rgba(255,122,26,0.06) 80%, rgba(255,122,26,0) 100%)',
       title: t('products.shmel.title'),

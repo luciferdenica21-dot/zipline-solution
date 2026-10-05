@@ -29,7 +29,7 @@ export default function Hero() {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="none"
           className="w-full h-full object-cover object-center"
           style={{ opacity: 0.8 }}
         >

@@ -32,7 +32,7 @@ export default function Concept() {
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="none"
         poster="https://images.unsplash.com/photo-1519315901367-f34ff9154487?auto=format&fit=crop&w=2000&q=80"
         className="absolute left-1/2 top-0 -translate-x-1/2 w-full h-[130%] sm:h-[120%] min-h-full object-cover object-center-top z-0 scale-[1.02]"
         style={{ objectPosition: 'center top', marginTop: '-200px' }}

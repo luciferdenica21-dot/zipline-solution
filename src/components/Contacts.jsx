@@ -6,11 +6,14 @@ export default function Contacts() {
   const isEn = i18n.language === 'en'
   return (
     <section id="contacts" className="w-full relative overflow-hidden min-h-screen flex flex-col">
-      {/* Background photo (replace /contacts.jpg to change it) with a dark scrim for readability */}
+      {/* Background photo (replace /contacts.webp to change it) with a dark scrim for readability */}
       <div aria-hidden className="absolute inset-0">
         <img
-          src="/contacts.jpg"
+          src="/contacts.webp"
           alt=""
+          width={1280}
+          height={960}
+          loading="lazy"
           className="w-full h-full object-cover object-top"
           style={{ transform: 'scale(1.15)', transformOrigin: 'top center' }}
         />
@@ -94,6 +97,9 @@ export default function Contacts() {
           <img
             src={Logo}
             alt="Zipline Solution"
+            width={1122}
+            height={374}
+            loading="lazy"
             className="h-11 sm:h-14 w-auto"
             style={{
               filter: 'brightness(0) invert(1)',

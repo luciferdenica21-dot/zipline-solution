@@ -29,7 +29,7 @@ export default function HeroAbout() {
           loop
           muted
           playsInline
-          preload="metadata"
+          preload="none"
           className="w-full h-full object-cover opacity-45"
         >
           <source src="/bg-video.mp4" type="video/mp4" />

@@ -11,6 +11,9 @@ export default function Footer() {
               <img
                 src={Logo}
                 alt="Логотип"
+                width={1122}
+                height={374}
+                loading="lazy"
                 className="h-12 sm:h-16 w-auto"
                 style={{ filter: 'brightness(0) invert(1)' }}
               />

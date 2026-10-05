@@ -55,6 +55,8 @@ export default function Header() {
             <img
               src={Logo}
               alt="Zipline Solution"
+              width={1122}
+              height={374}
               className="h-10 sm:h-12 md:h-14 w-auto"
               style={{
                 filter: 'brightness(0) saturate(100%) invert(91%) sepia(61%) saturate(500%) hue-rotate(0deg) brightness(105%)',

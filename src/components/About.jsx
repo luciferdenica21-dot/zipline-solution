@@ -115,9 +115,9 @@ export default function About() {
 
   return (
     <section id="about" className="relative w-full bg-black overflow-hidden">
-      {/* Background photo (replace /aboutmebg.jpg to change it) with a dark scrim for readability */}
+      {/* Background photo (replace /aboutmebg.webp to change it) with a dark scrim for readability */}
       <div aria-hidden className="absolute inset-0">
-        <img src="/aboutmebg.jpg" alt="" className="w-full h-full object-cover object-center" />
+        <img src="/aboutmebg.webp" alt="" width={1920} height={1200} loading="lazy" className="w-full h-full object-cover object-center" />
       </div>
       <div aria-hidden className="absolute inset-0 bg-black/70"></div>
       {/* Soft blurred seam after the products section */}
@@ -139,8 +139,11 @@ export default function About() {
           <div className="w-[60%] flex items-center content-indent py-6">
             <div className="flex items-start gap-6 xl:gap-9 w-full">
               <img
-                src="/about2.jpg"
+                src="/about2.webp"
                 alt="Василь Барановский"
+                width={653}
+                height={869}
+                loading="lazy"
                 className="h-[54vh] max-h-[580px] w-[38%] max-w-[340px] shrink-0 object-cover border border-white/15 shadow-2xl"
                 style={{ borderRadius: '0 60px 0 60px' }}
               />
@@ -177,8 +180,11 @@ export default function About() {
 
         <div className="relative px-[calc(1rem+1.25rem)] sm:px-[calc(1.5rem+1.75rem)]">
           <img
-            src="/about2.jpg"
+            src="/about2.webp"
             alt="Василь Барановский"
+            width={653}
+            height={869}
+            loading="lazy"
             className="w-full h-[38vh] object-cover border border-white/15 shadow-2xl"
             style={{ borderRadius: '0 60px 0 60px' }}
           />
