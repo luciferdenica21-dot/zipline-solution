@@ -1,59 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <!-- Main page - Russian -->
-  <url>
-    <loc>https://zipline-solution.com/</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://zipline-solution.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://zipline-solution.com/en" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zipline-solution.com/" />
-  </url>
-  
-  <!-- Main page - English -->
-  <url>
-    <loc>https://zipline-solution.com/en</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://zipline-solution.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://zipline-solution.com/en" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://zipline-solution.com/" />
-  </url>
-  
-  <!-- About section -->
-  <url>
-    <loc>https://zipline-solution.com/#about</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Products section -->
-  <url>
-    <loc>https://zipline-solution.com/#products</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Contacts section -->
-  <url>
-    <loc>https://zipline-solution.com/#contacts</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Hero section -->
-  <url>
-    <loc>https://zipline-solution.com/#hero</loc>
-    <lastmod>2024-09-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
+<?xml-stylesheet type="text/css" href="https://www.xml-sitemaps.com/css/sitemap.css"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
+  <url>
+       <loc>https://www.zipline-solution.com/</loc>
+       <lastmod>2026-10-05T13:03:24+00:00</lastmod>
+       <priority>1.0000</priority>
+  </url>
 </urlset>
