@@ -10,6 +10,30 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'TT Hoves Pro Bold';
+  src: url('/fonts/TT%20Hoves%20Pro%20Trial%20Bold.ttf') format('truetype');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Hoves Pro Light';
+  src: url('/fonts/TT%20Hoves%20Pro%20Trial%20Light.ttf') format('truetype');
+  font-weight: 100 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Hoves Pro Expanded';
+  src: url('/fonts/TT%20Hoves%20Pro%20Trial%20Expanded%20Black.ttf') format('truetype');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -21,15 +45,14 @@
     margin: 0;
     background-color: #070707;
     color: #ffffff;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 15px;
+    font-family: 'TT Hoves Pro Light', 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 19.5px;
     line-height: 1.85;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Bebas Neue', system-ui, sans-serif;
-    text-transform: uppercase;
+    font-family: 'TT Hoves Pro Bold', system-ui, sans-serif;
     letter-spacing: -0.01em;
     line-height: 0.96;
     color: #fff;
@@ -91,7 +114,7 @@
     border: 1px solid rgba(255,255,255,0.08);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
-    font-size: 10.5px;
+    font-size: 13.5px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.6);
@@ -108,8 +131,8 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 11px;
+    font-family: 'TT Hoves Pro Light', sans-serif;
+    font-size: 14.3px;
     transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
     box-shadow:
       0 10px 30px -10px rgba(255,122,26,0.7),
@@ -134,8 +157,8 @@
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
     color: #fff;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
+    font-family: 'TT Hoves Pro Light', sans-serif;
+    font-size: 20.8px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     font-weight: 400;
@@ -143,8 +166,8 @@
   }
   .btn-glass:hover {
     transform: translateY(-1px);
-    border-color: rgba(46,229,114,0.55);
-    background: linear-gradient(135deg, rgba(46,229,114,0.08), rgba(255,255,255,0.02));
+    border-color: rgba(158,230,25,0.55);
+    background: linear-gradient(135deg, rgba(158,230,25,0.08), rgba(255,255,255,0.02));
   }
 
   .btn-glass-orange {
@@ -158,7 +181,7 @@
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
     color: #FF9F45;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'TT Hoves Pro Light', sans-serif;
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -187,7 +210,7 @@
     backdrop-filter: blur(18px) saturate(160%);
     -webkit-backdrop-filter: blur(18px) saturate(160%);
     color: #FF9F45;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    font-family: 'TT Hoves Pro Light', system-ui, -apple-system, sans-serif !important;
     font-size: 12px;
     letter-spacing: 0.08em !important;
     text-transform: uppercase !important;
@@ -207,21 +230,21 @@
   }
 
   .nav-link-normal {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    font-family: 'TT Hoves Pro Light', system-ui, -apple-system, sans-serif !important;
     letter-spacing: 0.08em !important;
     text-transform: none !important;
-    font-weight: 500 !important;
+    font-weight: 300 !important;
   }
 
   .heading-normal {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
-    letter-spacing: 0.08em !important;
+    font-family: 'TT Hoves Pro Bold', system-ui, -apple-system, sans-serif !important;
+    letter-spacing: 0.01em !important;
     text-transform: none !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
   }
 
   .eyebrow {
-    font-size: 11px;
+    font-size: 14.3px;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.5);
@@ -249,6 +272,9 @@
   .mask-fade-v {
     mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 85%, transparent 100%);
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 85%, transparent 100%);
+  }
+  .font-outline {
+    font-family: 'TT Hoves Pro Expanded', 'TT Hoves Pro Bold', sans-serif !important;
   }
   .text-stroke-w {
     -webkit-text-stroke: 1px rgba(255,255,255,0.18);
@@ -291,3 +317,16 @@
 /* Hide number spinners */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* Shared left line: Hero, Products and About text all start on the same grid line.
+   Matches the inner offset of the product cards (card padding + text column padding). */
+.content-indent { padding-left: 1.25rem; padding-right: 1.25rem; }
+@media (min-width: 640px) {
+  .content-indent { padding-left: 1.75rem; padding-right: 1.75rem; }
+}
+@media (min-width: 1024px) {
+  .content-indent {
+    padding-left: calc(clamp(14px, 1.8vh, 30px) + clamp(8px, 1.1vw, 18px));
+    padding-right: calc(clamp(14px, 1.8vh, 30px) + clamp(8px, 1.1vw, 18px));
+  }
+}

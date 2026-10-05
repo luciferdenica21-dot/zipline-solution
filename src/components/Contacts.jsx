@@ -1,101 +1,115 @@
 import { useTranslation } from 'react-i18next'
+import Logo from '../assets/logobrand.svg'
 
 export default function Contacts() {
   const { t, i18n } = useTranslation()
   const isEn = i18n.language === 'en'
   return (
     <section id="contacts" className="w-full relative overflow-hidden min-h-screen flex flex-col">
-      {/* Background (unchanged) */}
-      <div className="absolute inset-0">
-        <img src="/product.jpg" alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black/55"></div>
+      {/* Background photo (replace /contacts.jpg to change it) with a dark scrim for readability */}
+      <div aria-hidden className="absolute inset-0">
+        <img
+          src="/contacts.jpg"
+          alt=""
+          className="w-full h-full object-cover object-top"
+          style={{ transform: 'scale(1.15)', transformOrigin: 'top center' }}
+        />
       </div>
+      <div aria-hidden className="absolute inset-0 bg-black/75"></div>
+      {/* Soft blurred seam after the about section */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-40 bg-gradient-to-b from-black via-black/55 to-transparent"
+        style={{
+          backdropFilter: 'blur(14px)',
+          WebkitBackdropFilter: 'blur(14px)',
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))',
+        }}
+      ></div>
 
-      <div className="relative z-10 flex-1 flex flex-col max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-10 pt-24 sm:pt-28 pb-5 sm:pb-6">
-        {/* Title + subtitle — Bebas, orange, centered; content pushed up, credit pinned to the bottom */}
-        <div className="flex-1 flex flex-col items-center justify-center text-center">
-        <h2 className={`${isEn ? 'text-[clamp(40px,6vw,72px)]' : 'text-[clamp(34px,4.6vw,56px)] font-bold'} font-display tracking-[0.02em] leading-[1.05] text-orange-500`}>
-          {t('contacts.title')}
-        </h2>
-        <p className="text-[14px] sm:text-[15px] text-white/60 leading-[1.7] mt-3 max-w-xl">
-          {t('contacts.subtitle')}
-        </p>
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-20 sm:pb-24">
+        {/* Promo card: title + subtitle left (centered on mobile), social/contact buttons right (centered on mobile) */}
+        <div className="flex flex-col items-center gap-8 sm:gap-9">
+          <div className="flex flex-col items-center text-center max-w-3xl">
+            <h2 className={`${isEn ? 'text-[clamp(38px,5.4vw,66px)]' : 'text-[clamp(32px,4.2vw,52px)] font-bold'} font-outline font-display normal-case tracking-[0.02em] leading-[1.1] text-orange-500`}>
+              {t('contacts.title')}
+            </h2>
+            <p className="text-[18px] sm:text-[19.5px] text-white/60 leading-[1.7] mt-3 max-w-xl">
+              {t('contacts.subtitle')}
+            </p>
+          </div>
 
-        {/* Social / contact icons — one centered row, big round buttons */}
-        <div className="flex items-center justify-center gap-4 sm:gap-5 mt-9 sm:mt-11">
-          <a
-            href="https://t.me/zipline_solution"
-            target="_blank"
-            rel="noreferrer"
-            aria-label={t('contacts.telegram')}
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 hover:scale-105 transition-all"
-          >
-            <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-            </svg>
-          </a>
+          {/* Social / contact icons */}
+          <div className="flex items-center justify-center gap-4 sm:gap-5 shrink-0">
+            <a
+              href="https://t.me/zipline_solution"
+              target="_blank"
+              rel="noreferrer"
+              aria-label={t('contacts.telegram')}
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 hover:scale-105 transition-all"
+            >
+              <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+            </a>
 
-          <a
-            href="https://wa.me/995557704193"
-            target="_blank"
-            rel="noreferrer"
-            aria-label={t('contacts.whatsapp')}
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 hover:scale-105 transition-all"
-          >
-            <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-            </svg>
-          </a>
+            <a
+              href="https://wa.me/995557704193"
+              target="_blank"
+              rel="noreferrer"
+              aria-label={t('contacts.whatsapp')}
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 hover:scale-105 transition-all"
+            >
+              <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+              </svg>
+            </a>
 
-          <a
-            href="tel:+995557704193"
-            aria-label={t('contacts.phone')}
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 hover:scale-105 transition-all"
-          >
-            <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </a>
+            <a
+              href="tel:+995557704193"
+              aria-label={t('contacts.phone')}
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 hover:scale-105 transition-all"
+            >
+              <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
 
-          <a
-            href="mailto:vasyl@zipline-solution.com"
-            aria-label={t('contacts.email')}
-            className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 hover:scale-105 transition-all"
-          >
-            <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" strokeLinecap="round" strokeLinejoin="round"/>
-              <polyline points="22,6 12,13 2,6" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </a>
+            <a
+              href="mailto:vasyl@zipline-solution.com"
+              aria-label={t('contacts.email')}
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-white hover:bg-white/20 hover:border-white/30 hover:scale-105 transition-all"
+            >
+              <svg className="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" strokeLinecap="round" strokeLinejoin="round"/>
+                <polyline points="22,6 12,13 2,6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+          </div>
         </div>
 
+        {/* Bottom row: white logo above the credit, centered like the reference footer */}
+        <div className="mt-10 sm:mt-12 flex flex-col items-center gap-4 sm:gap-5">
+          <img
+            src={Logo}
+            alt="Zipline Solution"
+            className="h-11 sm:h-14 w-auto"
+            style={{
+              filter: 'brightness(0) invert(1)',
+            }}
+          />
+          <p className="text-[12px] sm:text-[13px] tracking-[0.14em] text-white text-center">
+            <span className="credit-light">powered by</span>{' '}
+            <span className="font-display text-white">PXD STUDIO</span>
+          </p>
         </div>
-
-        {/* Credit — pinned to the very bottom, centered, neon glow animation */}
-        <p className="neon-credit mt-10 sm:mt-12 text-[13px] sm:text-[14px] font-medium tracking-[0.14em] text-center">
-          <span className="neon-yellow">powered by</span>{' '}
-          <span className="neon-green">PXD STUDIO</span>
-        </p>
       </div>
 
       <style>{`
-        .neon-yellow {
-          color: #facc15;
-          text-shadow: 0 0 4px rgba(250, 204, 21, 0.55), 0 0 12px rgba(250, 204, 21, 0.35), 0 0 28px rgba(250, 204, 21, 0.2);
-          animation: neonPulseY 2.6s ease-in-out infinite;
-        }
-        .neon-green {
-          color: #22c55e;
-          text-shadow: 0 0 4px rgba(34, 197, 94, 0.55), 0 0 12px rgba(34, 197, 94, 0.35), 0 0 28px rgba(34, 197, 94, 0.2);
-          animation: neonPulseG 2.6s ease-in-out infinite;
-        }
-        @keyframes neonPulseY {
-          0%, 100% { text-shadow: 0 0 4px rgba(250,204,21,0.5), 0 0 12px rgba(250,204,21,0.3), 0 0 26px rgba(250,204,21,0.15); opacity: 0.92; }
-          50% { text-shadow: 0 0 8px rgba(250,204,21,0.9), 0 0 22px rgba(250,204,21,0.6), 0 0 48px rgba(250,204,21,0.35); opacity: 1; }
-        }
-        @keyframes neonPulseG {
-          0%, 100% { text-shadow: 0 0 4px rgba(34,197,94,0.5), 0 0 12px rgba(34,197,94,0.3), 0 0 26px rgba(34,197,94,0.15); opacity: 0.92; }
-          50% { text-shadow: 0 0 8px rgba(34,197,94,0.9), 0 0 22px rgba(34,197,94,0.6), 0 0 48px rgba(34,197,94,0.35); opacity: 1; }
+        .credit-light {
+          font-family: 'TT Hoves Pro Light', sans-serif;
+          color: #ffffff;
         }
       `}</style>
     </section>

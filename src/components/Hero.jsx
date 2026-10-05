@@ -62,19 +62,19 @@ export default function Hero() {
 
       <div className="relative z-10 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
         <div className="w-full">
-          <div className="max-w-4xl">
-            <h1 className="animate-fade-up font-display tracking-[-0.02em] leading-[1.15] text-[7.5vw] sm:text-[5.5vw] md:text-[3.2vw] lg:text-[38px] xl:text-[44px] mb-8 sm:mb-10">
+          <div className="content-indent max-w-4xl">
+            <h1 className="animate-fade-up font-display uppercase tracking-[-0.02em] leading-[1.15] text-[8.4vw] sm:text-[7.15vw] md:text-[4.15vw] lg:text-[49px] xl:text-[57px] mb-8 sm:mb-10">
               <span className="block text-white">{t('hero.line1')}</span>
               <span className="block text-white">{t('hero.line2')}</span>
               <span className="block text-white">
                 {t('hero.line3')}
               </span>
-              <span className="block bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">
+              <span className="font-outline block bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">
                 {t('hero.line4')}
               </span>
             </h1>
 
-            <p className="animate-fade-up text-[15.5px] sm:text-[17px] md:text-[18px] leading-[1.75] text-white/70 max-w-2xl">
+            <p className="animate-fade-up text-[20px] sm:text-[22px] md:text-[23.5px] leading-[1.75] text-white/70 max-w-2xl">
               {t('hero.description')}
             </p>
           </div>

@@ -1,14 +1,82 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
-/* Infinite carousel: seamless translate3d loop, autoplay, arrows, dots, drag/swipe */
+/* Characteristics carousel — one spec per slide, like the spec carousel in the about section */
+function SpecsCarousel({ specs, isEn }) {
+  const count = specs.length
+  const [pos, setPos] = useState(0)
+  const touchX = useRef(null)
+
+  const go = (d) => setPos((p) => (p + d + count) % count)
+  const item = specs[pos]
+
+  const arrowBase = 'absolute top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full border border-white/25 bg-white/[0.06] text-white/85 hover:bg-white/[0.16] hover:border-white/50 backdrop-blur-sm transition-all w-9 h-9 sm:w-10 sm:h-10'
+
+  return (
+    <div
+      className="relative w-full select-none"
+      onTouchStart={(e) => {
+        touchX.current = e.touches[0].clientX
+      }}
+      onTouchEnd={(e) => {
+        if (touchX.current == null) return
+        const dx = e.changedTouches[0].clientX - touchX.current
+        touchX.current = null
+        if (dx < -45) go(1)
+        else if (dx > 45) go(-1)
+      }}
+    >
+      <button onClick={() => go(-1)} aria-label={isEn ? 'Previous spec' : 'Предыдущая характеристика'} className={`${arrowBase} left-0`}>
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button onClick={() => go(1)} aria-label={isEn ? 'Next spec' : 'Следующая характеристика'} className={`${arrowBase} right-0`}>
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      <div key={pos} className="spec-fade px-10 sm:px-12 lg:px-14 text-center">
+        <span className={`prod-spec-key block font-display text-[14px] sm:text-[15.5px] tracking-[0.16em] text-white ${isEn ? '' : 'tracking-[0.14em]'}`}>
+          {(item.key || '').replace(/\s*:\s*$/, '')}
+        </span>
+        <p className="prod-spec-value mt-2 text-[13.5px] sm:text-[15.5px] leading-[1.6] text-white/65">
+          {item.value}
+        </p>
+      </div>
+
+      <style>{`
+        @keyframes specFade {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .spec-fade { animation: specFade 0.4s cubic-bezier(0.33,1,0.68,1); }
+      `}</style>
+    </div>
+  )
+}
+
+/* Infinite carousel: seamless translate3d loop, arrows, drag/swipe */
 function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
   const count = images.length
   // Track = [cloneLast, ...images, cloneFirst] → seamless wrap on indices 1..count
   const [pos, setPos] = useState(1) // real index, 1-based into extended track
   const [animate, setAnimate] = useState(true)
-  const [hovered, setHovered] = useState(false)
+  const [zoom, setZoom] = useState(false)
+  const [zoomIdx, setZoomIdx] = useState(0)
+  // Natural aspect ratio per photo — on mobile the carousel takes the shape of the current photo
+  const [ratios, setRatios] = useState({})
+  const currentIdx = ((pos - 1) % count + count) % count
+  const currentRatio = ratios[images[currentIdx]] || 4 / 3
+  const movedRef = useRef(false)
   const drag = useRefState()
+
+  const openZoom = (realIdx) => {
+    setZoomIdx(realIdx)
+    setZoom(true)
+  }
 
   const goTo = (i) => {
     setAnimate(true)
@@ -18,15 +86,21 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
   const next = () => goTo((pos % count) + 1)
   const prev = () => goTo(((pos - 2 + count) % count) + 1)
 
-  // Autoplay
+  // Keyboard + body scroll lock while zoomed
   useEffect(() => {
-    if (hovered) return
-    const t = setInterval(() => {
-      setAnimate(true)
-      setPos((p) => (p % count) + 1)
-    }, 3500)
-    return () => clearInterval(t)
-  }, [hovered, count])
+    if (!zoom) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') setZoom(false)
+      else if (e.key === 'ArrowRight') setZoomIdx((z) => (z + 1) % count)
+      else if (e.key === 'ArrowLeft') setZoomIdx((z) => (z - 1 + count) % count)
+    }
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [zoom, count])
 
   // Seamless snap back after showing the cloned edge slide
   useEffect(() => {
@@ -46,40 +120,26 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
     }
   }, [pos, count])
 
-  const idx = ((pos - 1) % count + count) % count
   const dragging = drag.isDragging
   const dragPx = drag.dx
 
   return (
     <div
-      className="group/car relative flex w-full select-none flex-col h-[44vh] min-h-[260px] lg:h-auto lg:absolute lg:inset-0"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => {
-        setHovered(false)
-        drag.end()
-      }}
+      className="group/car car-shape relative flex w-full select-none flex-col lg:absolute lg:inset-0"
+      style={{ '--car-ratio': currentRatio, touchAction: 'pan-y' }}
+      onMouseLeave={() => drag.end()}
       onPointerDown={(e) => drag.start(e.clientX)}
       onPointerMove={(e) => drag.move(e.clientX)}
       onPointerUp={() => {
         const shift = drag.dx
+        movedRef.current = Math.abs(shift) > 8
         drag.drop()
         if (shift < -50) next()
         else if (shift > 50) prev()
       }}
       onPointerLeave={() => drag.end()}
-      style={{ touchAction: 'pan-y' }}
     >
-      {/* Frame: thin double border in the reference style */}
-      <div className="absolute -inset-[10px] sm:-inset-3 lg:-inset-4 border border-white/25 pointer-events-none"></div>
-      <div className="absolute -inset-[3px] sm:-inset-1.5 border border-white/10 pointer-events-none"></div>
-
-      <div
-        className="relative flex-1 min-h-0 overflow-hidden"
-        style={{
-          background: dark ? '#0a0a0a' : 'linear-gradient(170deg, #ffffff 0%, #f3f9f4 55%, #e2f1e7 100%)',
-          borderRadius: '0 clamp(20px, 2.6vw, 34px) 0 clamp(20px, 2.6vw, 34px)',
-        }}
-      >
+      <div className="relative flex-1 min-h-0 overflow-hidden">
         <div
           className="flex h-full"
           style={{
@@ -88,14 +148,28 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
           }}
         >
           {[images[count - 1], ...images, images[0]].map((src, i) => (
-            <div key={i} className="w-full shrink-0 h-full flex items-center justify-center">
+            <div
+              key={i}
+              className="w-full shrink-0 h-full flex items-center justify-center overflow-hidden cursor-zoom-in p-2 sm:p-3"
+              onClick={() => {
+                if (movedRef.current) return
+                openZoom(((i - 1) % count + count) % count)
+              }}
+            >
               <img
                 src={src}
                 alt={i === pos ? alt : ''}
                 draggable="false"
                 loading={i === 1 ? 'eager' : 'lazy'}
-                className="max-h-full max-w-full w-auto object-contain pointer-events-none"
-                style={imgTransform ? { transform: imgTransform } : undefined}
+                className="max-w-full max-h-full w-auto h-auto object-contain pointer-events-none"
+                style={{ borderRadius: '10%', ...(imgTransform ? { transform: imgTransform } : {}) }}
+                onLoad={(e) => {
+                  const el = e.target
+                  const key = el.getAttribute('src')
+                  if (!el.naturalWidth || !el.naturalHeight) return
+                  const ratio = el.naturalWidth / el.naturalHeight
+                  setRatios((r) => (r[key] ? r : { ...r, [key]: ratio }))
+                }}
                 onError={(e) => {
                   e.target.style.visibility = 'hidden'
                 }}
@@ -105,8 +179,10 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
         </div>
       </div>
 
-      {/* Arrows */}
-      <button
+      {/* Arrows (only when there is more than one photo) */}
+      {count > 1 && (
+        <>
+          <button
         onClick={(e) => {
           e.stopPropagation()
           prev()
@@ -130,21 +206,70 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </button>
+        </>
+      )}
 
-      {/* Dots */}
-      <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
-        {images.map((_, i) => (
-          <button
-            key={i}
-            onClick={(e) => {
-              e.stopPropagation()
-              goTo(i + 1)
-            }}
-            aria-label={`${isEn ? 'Photo' : 'Фото'} ${i + 1}`}
-            className={`h-1.5 rounded-full transition-all duration-300 ${i === idx ? 'w-6 bg-orange-500' : dark ? 'w-1.5 bg-white/35 hover:bg-white/60' : 'w-1.5 bg-black/25 hover:bg-black/45'}`}
-          ></button>
-        ))}
-      </div>
+      {/* Zoomed lightbox: photo at full size, arrows, close, keyboard nav */}
+      {zoom &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm"
+            onClick={() => setZoom(false)}
+          >
+            <img
+              src={images[zoomIdx]}
+              alt={`${alt} ${zoomIdx + 1}`}
+              draggable="false"
+              className="max-w-[94vw] max-h-[88vh] object-contain select-none shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setZoom(false)
+              }}
+              aria-label={isEn ? 'Close' : 'Закрыть'}
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 w-11 h-11 flex items-center justify-center rounded-full border border-white/25 bg-black/60 text-white/85 hover:bg-black/90 hover:border-white/50 transition-all backdrop-blur-sm"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            {count > 1 && (
+              <>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setZoomIdx((z) => (z - 1 + count) % count)
+              }}
+              aria-label={isEn ? 'Previous photo' : 'Предыдущее фото'}
+              className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full border border-white/25 bg-black/60 text-white/85 hover:bg-black/90 hover:border-white/50 transition-all backdrop-blur-sm"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setZoomIdx((z) => (z + 1) % count)
+              }}
+              aria-label={isEn ? 'Next photo' : 'Следующее фото'}
+              className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full border border-white/25 bg-black/60 text-white/85 hover:bg-black/90 hover:border-white/50 transition-all backdrop-blur-sm"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+              </>
+            )}
+            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-black/60 border border-white/15 text-white/75 text-sm tracking-wide backdrop-blur-sm">
+              {zoomIdx + 1} / {count}
+            </div>
+          </div>,
+          document.body
+        )}
+
     </div>
   )
 }
@@ -181,22 +306,22 @@ export default function Products() {
       }
       /* Product card layout: mobile = head / carousel / specs; desktop = text column + carousel column.
          Sizes scale with viewport height so a card + section header always fit one screen on desktop. */
-      .prod-grid { display: grid; gap: 2.5rem; grid-template-areas: "head" "car" "specs"; }
+      .prod-grid { display: grid; gap: 1.25rem; grid-template-areas: "head" "car" "specs"; }
+      /* Mobile: the photo block takes the shape of the current photo (no empty bands above/below) */
+      @media (max-width: 1023px) { .car-shape { aspect-ratio: var(--car-ratio, 4 / 3); } }
       .prod-head { grid-area: head; }
       .prod-car { grid-area: car; }
       .prod-specs { grid-area: specs; }
       @media (min-width: 1024px) {
-        .prod-grid { gap: clamp(16px, 2.4vh, 44px); grid-template-columns: 1fr 1fr; }
+        .prod-grid { gap: clamp(8px, 1.2vh, 22px); grid-template-columns: 1fr 1fr; min-height: min(66vh, 600px); }
         .prod-grid.dir-normal { grid-template-areas: "head car" "specs car"; }
-        .prod-grid.dir-reverse { grid-template-areas: "car head" "car specs"; }
-        .prod-head > div { border-left-width: 1px; padding-left: clamp(18px, 2.6vh, 28px); }
-        .prod-head .prod-tag { margin-bottom: clamp(10px, 1.6vh, 20px); }
-        .prod-head .prod-title { font-size: clamp(17px, 2.2vh + 0.35vw, 28px); margin-bottom: clamp(12px, 1.8vh, 20px); }
-        .prod-head .prod-desc { font-size: clamp(12.5px, 1.5vh + 0.1vw, 14.5px); line-height: 1.7; margin-bottom: clamp(14px, 2.2vh, 32px); }
-        .prod-specs .prod-divider { margin-bottom: clamp(14px, 2vh, 24px); }
-        .prod-specs .prod-specs-grid { gap: clamp(10px, 1.5vh, 16px) clamp(20px, 2.4vw, 32px); }
-        .prod-specs .prod-spec-key { font-size: clamp(8px, 1.05vh, 10px); }
-        .prod-specs .prod-spec-value { font-size: clamp(10.5px, 1.3vh, 12px); line-height: 1.55; }
+        .prod-grid.dir-reverse { grid-template-columns: 1fr 1fr; grid-template-areas: "car head" "car specs"; }
+        .prod-head { padding-left: clamp(8px, 1.1vw, 18px); padding-right: clamp(8px, 1.1vw, 18px); }
+        .prod-specs { padding-left: clamp(8px, 1.1vw, 18px); padding-right: clamp(8px, 1.1vw, 18px); }
+        .prod-head .prod-title { font-size: clamp(20px, 2.6vh + 0.4vw, 33px); margin-bottom: clamp(6px, 1vh, 12px); }
+        .prod-head .prod-desc { font-size: clamp(15px, 1.8vh + 0.15vw, 17.5px); line-height: 1.7; margin-bottom: clamp(8px, 1.2vh, 18px); }
+        .prod-specs .prod-spec-key { font-size: clamp(12.5px, 1.7vh, 15px); }
+        .prod-specs .prod-spec-value { font-size: clamp(12.5px, 1.55vh, 14px); line-height: 1.55; }
       }
     `
     document.head.appendChild(style)
@@ -230,9 +355,7 @@ export default function Products() {
   const products = [
     {
       id: 'chair',
-      images: ['/kreslo.png', '/kreslo2.png', '/kreslo3.png'],
-      imgTransform: 'scale(1.25) translateY(-5%)',
-      glow: 'radial-gradient(ellipse at 80% 12%, rgba(255,122,26,0.11), transparent 55%), radial-gradient(ellipse at 8% 92%, rgba(255,122,26,0.05), transparent 50%)',
+      images: ['/kreslofive.jpg'],
       title: t('products.chair.title'),
       tag: t('products.chair.tag'),
       description: t('products.chair.description'),
@@ -247,8 +370,7 @@ export default function Products() {
     },
     {
       id: 'magnet',
-      images: ['/magnit.png', '/magnit2.png', '/magnit3.png'],
-      glow: 'radial-gradient(ellipse at 15% 12%, rgba(46,229,114,0.10), transparent 55%), radial-gradient(ellipse at 92% 92%, rgba(46,229,114,0.05), transparent 50%)',
+      images: ['/magnet2.jpg'],
       title: t('products.magnet.title'),
       tag: t('products.magnet.tag'),
       description: t('products.magnet.description'),
@@ -262,9 +384,9 @@ export default function Products() {
     },
     {
       id: 'shmel',
-      images: ['/shmel.png', '/shmel2.png'],
+      images: ['/shmell3.jpg'],
+      imgTransform: 'scale(1.2)',
       dark: true,
-      glow: 'radial-gradient(ellipse at 80% 12%, rgba(96,165,250,0.11), transparent 55%), radial-gradient(ellipse at 8% 92%, rgba(96,165,250,0.05), transparent 50%)',
       title: t('products.shmel.title'),
       tag: t('products.shmel.tag'),
       description: t('products.shmel.description'),
@@ -281,33 +403,38 @@ export default function Products() {
   return (
     <section
       id="products"
-      className="relative w-full overflow-hidden py-12 lg:py-14"
+      className="relative w-full overflow-hidden py-12 lg:pt-14 lg:pb-24"
     >
-      {/* Background: solid black across the whole section */}
-      <div className="absolute inset-0 bg-black"></div>
-      <div className="absolute inset-0 section-grid-bg mask-fade-v opacity-40"></div>
+      {/* Background photo (replace /products.jpg to change it) with a dark scrim for readability */}
+      <div aria-hidden className="absolute inset-0">
+        <img src="/products.jpg" alt="" className="w-full h-full object-cover object-center" />
+      </div>
+      <div aria-hidden className="absolute inset-0 bg-black/70"></div>
+      {/* Soft blurred seam after the hero */}
       <div
-        className="absolute -right-40 top-0 w-[600px] h-[600px] rounded-full opacity-[0.08] blur-3xl pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #FF7A1A 0%, transparent 65%)' }}
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-40 bg-gradient-to-b from-black via-black/55 to-transparent"
+        style={{
+          backdropFilter: 'blur(14px)',
+          WebkitBackdropFilter: 'blur(14px)',
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0))',
+        }}
       ></div>
-      <div
-        className="absolute -left-40 bottom-0 w-[520px] h-[520px] rounded-full opacity-[0.06] blur-3xl pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #2EE572 0%, transparent 70%)' }}
-      ></div>
-
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header — centered, sized to leave room for a full card on screen */}
-        <div className="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
-          <h2 className={`${titleCls} leading-[1.15] text-[clamp(22px,3vh+0.6vw,40px)] text-white`}>
+        <div className="max-w-4xl mx-auto mb-8 px-5 sm:px-7 lg:px-0 text-center lg:mb-16">
+          <h2 className={`${titleCls} leading-[1.15] text-[27px] sm:text-[clamp(26px,3.1vh+0.62vw,46px)] text-white`}>
             {t('products.title')}
           </h2>
-          <p className="text-[clamp(12px,1.5vh,15px)] leading-[1.65] text-white/55 mt-2 sm:mt-3">
+          <p className="text-[14px] sm:text-[clamp(14.5px,1.7vh,17px)] leading-[1.6] text-white/55 mt-2 sm:mt-3">
             {t('products.subtitle')}
           </p>
         </div>
 
         {/* Products: text on one side, framed carousel on the other; sides alternate */}
-        <div className="flex flex-col gap-14 sm:gap-16 lg:gap-16">
+        <div className="flex flex-col gap-8 sm:gap-10 lg:gap-16">
+          <div aria-hidden className="h-px w-full bg-orange-500 lg:hidden" />
           {products.map((product, idx) => {
             const carousel = (
               <div className="prod-car relative">
@@ -316,43 +443,20 @@ export default function Products() {
             )
 
             const contentHead = (
-              <div className="prod-head relative flex flex-col justify-center lg:pl-10">
-                {/* Reference-style text block: thin vertical line + eyebrow */}
-                <div className="border-l border-white/25 pl-5 sm:pl-7">
-                  <div className="flex items-center gap-3 prod-tag mb-4">
-                    <span className={`text-[10px] font-mono tracking-[0.24em] uppercase text-white/45 ${isEn ? '' : 'font-display tracking-[0.2em]'}`}>
-                      {product.tag}
-                    </span>
-                  </div>
+              <div className="prod-head relative flex flex-col justify-center">
+                <h3 className={`prod-title px-10 sm:px-12 lg:px-14 mb-2 sm:mb-3 ${isEn ? 'heading-normal text-[21px] sm:text-[28.5px]' : 'font-display text-[23px] sm:text-[34px]'} leading-[1.25] text-center text-white lg:text-left`}>
+                  {product.title}
+                </h3>
 
-                  <h3 className={`prod-title ${isEn ? 'heading-normal text-[18px] sm:text-[22px]' : 'font-display text-[20px] sm:text-[26px]'} leading-[1.25] text-white mb-4`}>
-                    {product.title}
-                  </h3>
-
-                  <p className={`prod-desc text-[13.5px] sm:text-[14.5px] leading-[1.8] text-white/65 mb-6 max-w-xl`}>
-                    {product.description}
-                  </p>
-                </div>
+                <p className='prod-desc px-10 sm:px-12 lg:px-14 text-[15.5px] sm:text-[19px] leading-[1.8] text-center text-white/75 lg:text-left'>
+                  {product.description}
+                </p>
               </div>
             )
 
             const contentSpecs = (
-              <div className="prod-specs lg:pl-10">
-                <div className="lg:pl-7">
-                  <div className="prod-divider h-px w-full bg-gradient-to-r from-white/[0.14] to-transparent mb-5"></div>
-                  <div className="prod-specs-grid grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
-                    {product.characteristics.map((char, i) => (
-                      <div key={i} className="flex flex-col gap-1">
-                        <span className={`prod-spec-key text-[9px] font-mono tracking-[0.16em] uppercase text-orange-400/80 ${isEn ? '' : 'font-display tracking-[0.14em]'}`}>
-                          {char.key}
-                        </span>
-                        <span className="prod-spec-value text-[11.5px] sm:text-[12px] leading-[1.6] text-white/65">
-                          {char.value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+              <div className="prod-specs px-5 sm:px-7">
+                <SpecsCarousel specs={product.characteristics} isEn={isEn} />
               </div>
             )
 
@@ -360,13 +464,10 @@ export default function Products() {
               <article
                 key={product.id}
                 id={`product-${product.id}`}
-                className="group relative scroll-mt-24 rounded-3xl border border-white/[0.07] bg-white/[0.015] overflow-hidden"
-                style={{
-                  background: `linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0) 55%), ${product.glow}`,
-                  ...(highlighted === product.id ? { animation: 'productFlash 2.2s ease-out' } : {}),
-                }}
+                className="group relative scroll-mt-24 rounded-3xl overflow-hidden"
+                style={highlighted === product.id ? { animation: 'productFlash 2.2s ease-out' } : undefined}
               >
-                <div className={`prod-grid ${idx % 2 === 1 ? 'dir-reverse' : 'dir-normal'} relative p-5 sm:p-7 lg:p-[clamp(18px,2.6vh,44px)]`}>
+                <div className={`prod-grid ${idx % 2 === 1 ? 'dir-reverse' : 'dir-normal'} relative p-5 sm:p-7 lg:p-[clamp(14px,1.8vh,30px)]`}>
                   {contentHead}
                   {carousel}
                   {contentSpecs}
@@ -374,6 +475,7 @@ export default function Products() {
               </article>
             )
           })}
+          <div aria-hidden className="h-px w-full bg-orange-500 lg:hidden" />
         </div>
       </div>
     </section>

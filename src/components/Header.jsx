@@ -77,7 +77,7 @@ export default function Header() {
             ))}
             <button
               onClick={() => scrollTo('contacts')}
-              className={`${isEn ? 'btn-glass-orange-normal' : 'btn-glass-orange'} rounded-lg !px-3 !py-1.5 !text-[11px] !border-green-500/55 !text-green-400 !bg-green-500/10`}
+              className={`${isEn ? 'btn-glass-orange-normal' : 'btn-glass-orange'} rounded-lg !px-3 !py-1.5 !text-[11px] !border-safety-500/55 !text-safety-400 !bg-safety-500/10`}
             >
               {t('header.contactMe')}
             </button>
@@ -101,7 +101,7 @@ export default function Header() {
             <button
               onClick={() => scrollTo('contacts')}
               aria-label={t('header.contactMe')}
-              className="w-10 h-10 rounded-full bg-green-500/15 border border-green-500/50 text-green-400 flex items-center justify-center hover:bg-green-500/30 transition-colors"
+              className="w-10 h-10 rounded-full bg-safety-500/15 border border-safety-500/50 text-safety-400 flex items-center justify-center hover:bg-safety-500/30 transition-colors"
             >
               <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
                 <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round" />

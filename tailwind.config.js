@@ -21,9 +21,9 @@ export default {
           600: '#F06400',
         },
         safety: {
-          400: '#5CFF8F',
-          500: '#2EE572',
-          600: '#17C85C',
+          400: '#B8F14D',
+          500: '#9EE619',
+          600: '#7FBE0F',
         },
         line: {
           DEFAULT: 'rgba(255,255,255,0.10)',
@@ -31,8 +31,8 @@ export default {
         },
       },
       fontFamily: {
-        display: ['"Bebas Neue"', 'system-ui', 'sans-serif'],
-        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['"TT Hoves Pro Bold"', 'system-ui', 'sans-serif'],
+        sans: ['"TT Hoves Pro Light"', 'Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
       letterSpacing: {
         industrial: '-0.01em',
@@ -40,7 +40,7 @@ export default {
       },
       boxShadow: {
         'orange-glow': '0 0 0 1px rgba(255,122,26,0.6), 0 8px 30px -8px rgba(255,122,26,0.55)',
-        'green-glow': '0 0 0 1px rgba(46,229,114,0.5), 0 8px 30px -8px rgba(46,229,114,0.45)',
+        'green-glow': '0 0 0 1px rgba(158,230,25,0.5), 0 8px 30px -8px rgba(158,230,25,0.45)',
       },
       backdropBlur: {
         xs: '2px',
