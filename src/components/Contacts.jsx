@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import Logo from '../assets/logobrand.svg'
+import Logo from '../assets/logobrand1.png'
 
 export default function Contacts() {
   const { t, i18n } = useTranslation()

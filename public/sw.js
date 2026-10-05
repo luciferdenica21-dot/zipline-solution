@@ -1,8 +1,8 @@
 // Service Worker for Zipline Solution PWA
-const CACHE_NAME = 'zipline-solution-v4';
+const CACHE_NAME = 'zipline-solution-v5';
 const urlsToCache = [
   '/manifest.json',
-  '/logobrand.svg'
+  '/logobrand1.png'
 ];
 
 self.addEventListener('install', event => {

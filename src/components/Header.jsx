@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import Logo from '../assets/logobrand.svg'
+import Logo from '../assets/logobrand1.png'
 
 /* Contacts lives in the CTA button (desktop) / burger row (mobile), not among the nav links */
 const navItems = [

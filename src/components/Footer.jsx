@@ -1,4 +1,4 @@
-import Logo from '../assets/logobrand.svg'
+import Logo from '../assets/logobrand1.png'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -8,7 +8,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div className="md:col-span-2">
             <div className="mb-5">
-              <img src={Logo} alt="Логотип" className="logo-yellow h-12 sm:h-16 w-auto" />
+              <img
+                src={Logo}
+                alt="Логотип"
+                className="h-12 sm:h-16 w-auto"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
             </div>
             <p className="text-white/60 max-w-md leading-relaxed mb-5">
               Аттракционы нового поколения. Проектируем, строим и обслуживаем

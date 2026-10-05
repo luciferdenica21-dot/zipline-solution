@@ -3,6 +3,7 @@
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteBase /
   
   # Force HTTPS
   RewriteCond %{HTTPS} off
@@ -18,9 +19,11 @@
   RewriteRule ^ %1 [L,R=301]
   
   # Handle SPA routing - redirect all requests to index.html
+  RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^ index.html [L]
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule . /index.html [L]
 </IfModule>
 
 # Gzip Compression
