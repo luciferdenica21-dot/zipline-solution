@@ -99,7 +99,8 @@ export default function Contacts() {
               filter: 'brightness(0) invert(1)',
             }}
           />
-          <p className="text-[12px] sm:text-[13px] tracking-[0.14em] text-white text-center">
+          {/* The credit line moves down on its own (translate, not margin) so the logo above stays put */}
+          <p className="translate-y-[48px] sm:translate-y-[64px] text-[12px] sm:text-[13px] tracking-[0.14em] text-white text-center">
             <span className="credit-light">powered by</span>{' '}
             <span className="font-display text-white">PXD STUDIO</span>
           </p>

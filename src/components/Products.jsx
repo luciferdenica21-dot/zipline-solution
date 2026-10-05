@@ -27,24 +27,27 @@ function SpecsCarousel({ specs, isEn }) {
         else if (dx > 45) go(-1)
       }}
     >
-      <button onClick={() => go(-1)} aria-label={isEn ? 'Previous spec' : 'Предыдущая характеристика'} className={`${arrowBase} left-0`}>
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button onClick={() => go(1)} aria-label={isEn ? 'Next spec' : 'Следующая характеристика'} className={`${arrowBase} right-0`}>
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-
       <div key={pos} className="spec-fade px-10 sm:px-12 lg:px-14 text-center">
-        <span className={`prod-spec-key block font-display text-[14px] sm:text-[15.5px] tracking-[0.16em] text-white ${isEn ? '' : 'tracking-[0.14em]'}`}>
+        <span className={`prod-spec-key block font-display text-[16.5px] sm:text-[18.5px] tracking-[0.16em] text-white ${isEn ? '' : 'tracking-[0.14em]'}`}>
           {(item.key || '').replace(/\s*:\s*$/, '')}
         </span>
         <p className="prod-spec-value mt-2 text-[13.5px] sm:text-[15.5px] leading-[1.6] text-white/65">
           {item.value}
         </p>
+      </div>
+
+      {/* Arrows: on mobile they float on the sides of the text, on desktop they sit centred under it */}
+      <div className="contents lg:mt-4 lg:flex lg:items-center lg:justify-center lg:gap-5">
+        <button onClick={() => go(-1)} aria-label={isEn ? 'Previous spec' : 'Предыдущая характеристика'} className={`${arrowBase} left-0 lg:static lg:translate-y-0`}>
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button onClick={() => go(1)} aria-label={isEn ? 'Next spec' : 'Следующая характеристика'} className={`${arrowBase} right-0 lg:static lg:translate-y-0`}>
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
 
       <style>{`
@@ -66,10 +69,6 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
   const [animate, setAnimate] = useState(true)
   const [zoom, setZoom] = useState(false)
   const [zoomIdx, setZoomIdx] = useState(0)
-  // Natural aspect ratio per photo — on mobile the carousel takes the shape of the current photo
-  const [ratios, setRatios] = useState({})
-  const currentIdx = ((pos - 1) % count + count) % count
-  const currentRatio = ratios[images[currentIdx]] || 4 / 3
   const movedRef = useRef(false)
   const drag = useRefState()
 
@@ -124,9 +123,10 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
   const dragPx = drag.dx
 
   return (
+    <>
     <div
       className="group/car car-shape relative flex w-full select-none flex-col lg:absolute lg:inset-0"
-      style={{ '--car-ratio': currentRatio, touchAction: 'pan-y' }}
+      style={{ touchAction: 'pan-y' }}
       onMouseLeave={() => drag.end()}
       onPointerDown={(e) => drag.start(e.clientX)}
       onPointerMove={(e) => drag.move(e.clientX)}
@@ -139,7 +139,8 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
       }}
       onPointerLeave={() => drag.end()}
     >
-      <div className="relative flex-1 min-h-0 overflow-hidden">
+      {/* px: side lanes reserved for the arrows, so they never cover the photo */}
+      <div className="relative flex-1 min-h-0 overflow-hidden px-10 lg:px-14">
         <div
           className="flex h-full"
           style={{
@@ -163,13 +164,6 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
                 loading={i === 1 ? 'eager' : 'lazy'}
                 className="max-w-full max-h-full w-auto h-auto object-contain pointer-events-none"
                 style={{ borderRadius: '10%', ...(imgTransform ? { transform: imgTransform } : {}) }}
-                onLoad={(e) => {
-                  const el = e.target
-                  const key = el.getAttribute('src')
-                  if (!el.naturalWidth || !el.naturalHeight) return
-                  const ratio = el.naturalWidth / el.naturalHeight
-                  setRatios((r) => (r[key] ? r : { ...r, [key]: ratio }))
-                }}
                 onError={(e) => {
                   e.target.style.visibility = 'hidden'
                 }}
@@ -179,18 +173,21 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
         </div>
       </div>
 
-      {/* Arrows (only when there is more than one photo) */}
-      {count > 1 && (
-        <>
-          <button
+    </div>
+
+    {/* Arrows (only when there is more than one photo): centred on the sides of the photo.
+        Always visible on mobile, fading in on hover / keyboard focus on desktop */}
+    {count > 1 && (
+      <div className="contents">
+        <button
         onClick={(e) => {
           e.stopPropagation()
           prev()
         }}
         aria-label={isEn ? 'Previous photo' : 'Предыдущее фото'}
-        className={`absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center rounded-full border transition-all backdrop-blur-sm ${dark ? 'bg-black/55 border-white/20 text-white/85 hover:bg-black/80 hover:border-white/45' : 'bg-white/70 border-black/10 text-neutral-800 shadow-sm hover:bg-white hover:border-black/25'} ${dragging ? 'opacity-100' : 'opacity-0 group-hover/car:opacity-100'}`}
+        className={`car-arrow absolute top-1/2 -translate-y-1/2 left-1 lg:left-1.5 flex items-center justify-center rounded-full border transition-all backdrop-blur-sm w-9 h-9 lg:w-12 lg:h-12 ${dark ? 'bg-black/55 border-white/20 text-white/85 hover:bg-black/80 hover:border-white/45' : 'bg-white/70 border-black/10 text-neutral-800 shadow-sm hover:bg-white hover:border-black/25'}`}
       >
-        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
@@ -200,14 +197,14 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
           next()
         }}
         aria-label={isEn ? 'Next photo' : 'Следующее фото'}
-        className={`absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center rounded-full border transition-all backdrop-blur-sm ${dark ? 'bg-black/55 border-white/20 text-white/85 hover:bg-black/80 hover:border-white/45' : 'bg-white/70 border-black/10 text-neutral-800 shadow-sm hover:bg-white hover:border-black/25'} ${dragging ? 'opacity-100' : 'opacity-0 group-hover/car:opacity-100'}`}
+        className={`car-arrow absolute top-1/2 -translate-y-1/2 right-1 lg:right-1.5 flex items-center justify-center rounded-full border transition-all backdrop-blur-sm w-9 h-9 lg:w-12 lg:h-12 ${dark ? 'bg-black/55 border-white/20 text-white/85 hover:bg-black/80 hover:border-white/45' : 'bg-white/70 border-black/10 text-neutral-800 shadow-sm hover:bg-white hover:border-black/25'}`}
       >
-        <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
       </button>
-        </>
-      )}
+      </div>
+    )}
 
       {/* Zoomed lightbox: photo at full size, arrows, close, keyboard nav */}
       {zoom &&
@@ -269,8 +266,7 @@ function PhotoCarousel({ images, alt, isEn, imgTransform, dark }) {
           </div>,
           document.body
         )}
-
-    </div>
+    </>
   )
 }
 
@@ -307,11 +303,16 @@ export default function Products() {
       /* Product card layout: mobile = head / carousel / specs; desktop = text column + carousel column.
          Sizes scale with viewport height so a card + section header always fit one screen on desktop. */
       .prod-grid { display: grid; gap: 1.25rem; grid-template-areas: "head" "car" "specs"; }
-      /* Mobile: the photo block takes the shape of the current photo (no empty bands above/below) */
-      @media (max-width: 1023px) { .car-shape { aspect-ratio: var(--car-ratio, 4 / 3); } }
+      /* Mobile: one fixed frame height for every photo — the block never jumps while swiping */
+      @media (max-width: 1023px) { .car-shape { height: clamp(264px, 82vw, 430px); } }
       .prod-head { grid-area: head; }
       .prod-car { grid-area: car; }
       .prod-specs { grid-area: specs; }
+      /* Desktop: carousel arrows stay over the photo and fade in on hover / keyboard focus */
+      @media (min-width: 1024px) {
+        .car-arrow { opacity: 0; }
+        .prod-car:hover .car-arrow, .car-arrow:focus-visible { opacity: 1; }
+      }
       @media (min-width: 1024px) {
         .prod-grid { gap: clamp(8px, 1.2vh, 22px); grid-template-columns: 1fr 1fr; min-height: min(66vh, 600px); }
         .prod-grid.dir-normal { grid-template-areas: "head car" "specs car"; }
@@ -320,7 +321,7 @@ export default function Products() {
         .prod-specs { padding-left: clamp(8px, 1.1vw, 18px); padding-right: clamp(8px, 1.1vw, 18px); }
         .prod-head .prod-title { font-size: clamp(20px, 2.6vh + 0.4vw, 33px); margin-bottom: clamp(6px, 1vh, 12px); }
         .prod-head .prod-desc { font-size: clamp(15px, 1.8vh + 0.15vw, 17.5px); line-height: 1.7; margin-bottom: clamp(8px, 1.2vh, 18px); }
-        .prod-specs .prod-spec-key { font-size: clamp(12.5px, 1.7vh, 15px); }
+        .prod-specs .prod-spec-key { font-size: clamp(14px, 1.95vh, 17.5px); }
         .prod-specs .prod-spec-value { font-size: clamp(12.5px, 1.55vh, 14px); line-height: 1.55; }
       }
     `
@@ -355,7 +356,9 @@ export default function Products() {
   const products = [
     {
       id: 'chair',
-      images: ['/kreslofive.jpg'],
+      images: ['/k1.png', '/k2.png', '/k3.png', '/k4.png', '/k5.png'],
+      // Soft accent wash: green for the chair, flowing into grey on the magnet and orange on the shmel
+      gradient: 'linear-gradient(150deg, rgba(158,230,25,0.26) 0%, rgba(158,230,25,0.10) 42%, rgba(158,230,25,0) 80%)',
       title: t('products.chair.title'),
       tag: t('products.chair.tag'),
       description: t('products.chair.description'),
@@ -370,7 +373,8 @@ export default function Products() {
     },
     {
       id: 'magnet',
-      images: ['/magnet2.jpg'],
+      images: ['/m1.png', '/m2.png', '/m3.png', '/m4.png', '/m5.png'],
+      gradient: 'linear-gradient(150deg, rgba(178,184,194,0.26) 0%, rgba(146,152,162,0.20) 45%, rgba(104,110,120,0.08) 78%, rgba(104,110,120,0) 100%)',
       title: t('products.magnet.title'),
       tag: t('products.magnet.tag'),
       description: t('products.magnet.description'),
@@ -384,9 +388,9 @@ export default function Products() {
     },
     {
       id: 'shmel',
-      images: ['/shmell3.jpg'],
-      imgTransform: 'scale(1.2)',
+      images: ['/s1.png', '/s2.png', '/s3.png', '/s4.png', '/s5.png'],
       dark: true,
+      gradient: 'linear-gradient(150deg, rgba(146,152,162,0.10) 0%, rgba(255,122,26,0.24) 45%, rgba(255,122,26,0.06) 80%, rgba(255,122,26,0) 100%)',
       title: t('products.shmel.title'),
       tag: t('products.shmel.tag'),
       description: t('products.shmel.description'),
@@ -403,13 +407,8 @@ export default function Products() {
   return (
     <section
       id="products"
-      className="relative w-full overflow-hidden py-12 lg:pt-14 lg:pb-24"
+      className="relative w-full overflow-hidden py-12 lg:pt-9 lg:pb-24"
     >
-      {/* Background photo (replace /products.jpg to change it) with a dark scrim for readability */}
-      <div aria-hidden className="absolute inset-0">
-        <img src="/products.jpg" alt="" className="w-full h-full object-cover object-center" />
-      </div>
-      <div aria-hidden className="absolute inset-0 bg-black/70"></div>
       {/* Soft blurred seam after the hero */}
       <div
         aria-hidden
@@ -423,7 +422,7 @@ export default function Products() {
       ></div>
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header — centered, sized to leave room for a full card on screen */}
-        <div className="max-w-4xl mx-auto mb-8 px-5 sm:px-7 lg:px-0 text-center lg:mb-16">
+        <div className="max-w-4xl mx-auto mb-8 px-5 sm:px-7 lg:px-0 text-center lg:mb-10">
           <h2 className={`${titleCls} leading-[1.15] text-[27px] sm:text-[clamp(26px,3.1vh+0.62vw,46px)] text-white`}>
             {t('products.title')}
           </h2>
@@ -465,7 +464,10 @@ export default function Products() {
                 key={product.id}
                 id={`product-${product.id}`}
                 className="group relative scroll-mt-24 rounded-3xl overflow-hidden"
-                style={highlighted === product.id ? { animation: 'productFlash 2.2s ease-out' } : undefined}
+                style={{
+                  backgroundImage: product.gradient,
+                  ...(highlighted === product.id ? { animation: 'productFlash 2.2s ease-out' } : {}),
+                }}
               >
                 <div className={`prod-grid ${idx % 2 === 1 ? 'dir-reverse' : 'dir-normal'} relative p-5 sm:p-7 lg:p-[clamp(14px,1.8vh,30px)]`}>
                   {contentHead}
@@ -475,7 +477,6 @@ export default function Products() {
               </article>
             )
           })}
-          <div aria-hidden className="h-px w-full bg-orange-500 lg:hidden" />
         </div>
       </div>
     </section>

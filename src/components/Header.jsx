@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import Logo from '../assets/logobrand.svg'
 
+/* Contacts lives in the CTA button (desktop) / burger row (mobile), not among the nav links */
 const navItems = [
   { id: 'products', labelKey: 'header.products' },
-  { id: 'contacts', labelKey: 'header.contacts' },
   { id: 'about', labelKey: 'header.about' },
 ]
 
@@ -43,7 +43,7 @@ export default function Header() {
       }`}
     >
       <div className="w-full px-4 sm:px-6 lg:px-10">
-        <div className="flex items-center justify-between py-3 sm:py-4">
+        <div className="relative flex items-center justify-between py-3 sm:py-4">
 
           {/* Logo */}
           <a
@@ -62,19 +62,29 @@ export default function Header() {
             />
           </a>
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-8 xl:gap-10">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                onClick={(e) => handleClick(e, item.id)}
-                className={navLinkCls}
-              >
-                {t(item.labelKey)}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
-              </a>
+          {/* Desktop nav links — centered in the header, orange slash between them */}
+          <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-5 xl:gap-7">
+            {navItems.map((item, i) => (
+              <Fragment key={item.id}>
+                {i > 0 && (
+                  <span aria-hidden className="select-none text-[15px] leading-none text-orange-500/85">
+                    /
+                  </span>
+                )}
+                <a
+                  href={`#${item.id}`}
+                  onClick={(e) => handleClick(e, item.id)}
+                  className={navLinkCls}
+                >
+                  {t(item.labelKey)}
+                  <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full"></span>
+                </a>
+              </Fragment>
             ))}
+          </nav>
+
+          {/* Desktop actions */}
+          <div className="hidden lg:flex items-center gap-4">
             <button
               onClick={() => scrollTo('contacts')}
               className={`${isEn ? 'btn-glass-orange-normal' : 'btn-glass-orange'} rounded-lg !px-3 !py-1.5 !text-[11px] !border-safety-500/55 !text-safety-400 !bg-safety-500/10`}
@@ -83,13 +93,13 @@ export default function Header() {
             </button>
             <button
               onClick={() => i18n.changeLanguage(isEn ? 'ru' : 'en')}
-              className={`text-[12px] font-medium ${isEn ? 'nav-link-normal' : 'tracking-[0.12em]'} text-white/70 hover:text-white transition-colors ml-4`}
+              className={`text-[12px] font-medium ${isEn ? 'nav-link-normal' : 'tracking-[0.12em]'} text-white/70 hover:text-white transition-colors`}
             >
               {isEn ? 'RU' : 'EN'}
             </button>
-          </nav>
+          </div>
 
-          {/* Mobile: language switch + green phone (outside the burger) + burger */}
+          {/* Mobile: language switch + burger (contacts lives inside the burger) */}
           <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={() => i18n.changeLanguage(isEn ? 'ru' : 'en')}
@@ -97,15 +107,6 @@ export default function Header() {
               className="h-10 min-w-[44px] px-2.5 rounded-full border border-white/25 text-white/85 text-[11px] font-semibold tracking-[0.08em] hover:border-white/50 hover:text-white transition-colors"
             >
               {isEn ? 'RU' : 'EN'}
-            </button>
-            <button
-              onClick={() => scrollTo('contacts')}
-              aria-label={t('header.contactMe')}
-              className="w-10 h-10 rounded-full bg-safety-500/15 border border-safety-500/50 text-safety-400 flex items-center justify-center hover:bg-safety-500/30 transition-colors"
-            >
-              <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
             </button>
             <button
               className={`flex flex-col justify-center items-center w-10 h-10 ${open ? 'burger-open' : ''}`}
@@ -138,6 +139,12 @@ export default function Header() {
               {t(item.labelKey)}
             </a>
           ))}
+          <button
+            onClick={(e) => handleClick(e, 'contacts')}
+            className="mx-4 my-3 flex items-center justify-center rounded-lg px-4 py-3 font-display text-[13px] uppercase tracking-[0.1em] text-black bg-gradient-to-r from-safety-400 via-safety-500 to-safety-600 hover:brightness-105 transition-all"
+          >
+            {t('header.contactMe')}
+          </button>
         </nav>
       </div>
 
